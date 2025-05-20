@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台词字幕审核辅助工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>台词字幕审核辅助工具</h1>
+            <p>专业版 - 支持多列编辑和SRT替换</p>
+        </div>
+
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="edit">编辑功能</button>
+            <button class="tab-button" data-tab="replace">SRT替换</button>
+        </div>
+
+        <div class="tab-content active" id="edit-tab">
+            <div class="controls">
+                <button class="btn btn-primary" onclick="importFile()"><i class="fas fa-file-import"></i> 导入CSV</button>
+                <!-- 新增导入SRT按钮 -->
+                <button class="btn btn-primary" onclick="importSrtToEdit()"><i class="fas fa-file-import"></i> 导入SRT到D列</button>
+                <button class="btn btn-secondary" onclick="addRow()"><i class="fas fa-plus-square"></i> 添加一行</button>
+                <button class="btn btn-secondary" onclick="addRows(10)"><i class="fas fa-bars"></i> 添加10行</button>
+                <button class="btn btn-warning" onclick="clearTable()"><i class="fas fa-trash-alt"></i> 清空</button>
+                <button class="btn btn-success" onclick="exportTable()"><i class="fas fa-file-export"></i> 导出CSV</button>
+            </div>
+
+            <div class="paste-hint">
+                提示：可以直接在表格中粘贴Excel/CSV数据，支持批量粘贴多行和多列。选中单元格后按Ctrl+V粘贴。
+                <br>
+                <!-- 新增提示 -->
+                <strong>新功能</strong>：可通过"导入SRT到D列"按钮导入SRT文件，台词内容将自动填充到D列(改日语字幕)，并在SRT替换页面使用。
+            </div>
+
+            <div class="table-container">
+                <table id="content-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">序号</th>
+                            <th style="width: 18%;">说话人 (A列)
+                                <button class="header-btn copy-column-btn" title="复制此列" onclick="copyColumn(0)"><i class="fas fa-copy"></i></button>
+                                <button class="header-btn batch-edit-column-btn" title="批量编辑此列" onclick="openBatchEditModal(0)"><i class="fas fa-edit"></i></button>
+                            </th>
+                            <th style="width: 27%;">中文字幕 (B列)
+                                <button class="header-btn copy-column-btn" title="复制此列" onclick="copyColumn(1)"><i class="fas fa-copy"></i></button>
+                                <button class="header-btn batch-edit-column-btn" title="批量编辑此列" onclick="openBatchEditModal(1)"><i class="fas fa-edit"></i></button>
+                            </th>
+                            <th style="width: 20%;">原日语字幕 (C列)
+                                <button class="header-btn copy-column-btn" title="复制此列" onclick="copyColumn(2)"><i class="fas fa-copy"></i></button>
+                                <button class="header-btn batch-edit-column-btn" title="批量编辑此列" onclick="openBatchEditModal(2)"><i class="fas fa-edit"></i></button>
+                            </th>
+                            <th style="width: 20%;">改日语字幕 (D列)
+                                <button class="header-btn copy-column-btn" title="复制此列" onclick="copyColumn(3)"><i class="fas fa-copy"></i></button>
+                                <button class="header-btn batch-edit-column-btn" title="批量编辑此列" onclick="openBatchEditModal(3)"><i class="fas fa-edit"></i></button>
+                            </th>
+                            <th style="width: 10%;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-content" id="replace-tab">
+            <div class="controls">
+                <label class="btn btn-primary" style="cursor: pointer;">
+                    <input type="file" style="display: none;" id="srt-file" accept=".srt">
+                    <i class="fas fa-upload"></i> 上传SRT文件
+                </label>
+                <button class="btn btn-action" onclick="replaceSubtitles()"><i class="fas fa-exchange-alt"></i> 开始替换</button>
+                <button class="btn btn-success" onclick="exportSrt()"><i class="fas fa-file-download"></i> 导出新SRT</button>
+                <span class="status-text" id="srt-status">请上传SRT文件或从编辑页导入</span>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" id="srt-search-input" placeholder="搜索字幕内容...">
+                <button class="btn btn-secondary" onclick="searchSrt()"><i class="fas fa-search"></i> 搜索</button>
+                <button class="btn btn-secondary" onclick="clearSrtSearch()"><i class="fas fa-times-circle"></i> 清除</button>
+            </div>
+
+            <div class="srt-table-container">
+                <table id="srt-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 35%;">修改后字幕 (D列)</th>
+                            <th style="width: 20%;">时间轴</th>
+                            <th style="width: 45%;">SRT台词内容</th>
+                        </tr>
+                    </thead>
+                    <tbody id="srt-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="batch-edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="batch-edit-modal-title">批量编辑列</h2>
+                <button class="close-btn" onclick="closeBatchEditModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="batch-edit-textarea" rows="15"></textarea>
+                <p class="modal-hint">提示：每行对应表格中的一行数据。编辑完成后，点击"应用修改"将更新回表格。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBatchEditModal()">取消</button>
+                <button class="btn btn-primary" onclick="applyBatchEdit()">应用修改</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-notification" id="toast-notification"></div>
+    <script src="script.js"></script>
+</body>
+</html>

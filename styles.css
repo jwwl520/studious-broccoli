@@ -1,0 +1,555 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.app-container {
+    max-width: 1600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.header {
+    background: linear-gradient(135deg, #5660f0 0%, #7B42F6 100%);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 8px 8px 0 0;
+    margin: -20px -20px 20px -20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.header p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* 选项卡样式 */
+.tab-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.tab-button {
+    padding: 12px 22px;
+    border: none;
+    background: transparent;
+    color: #495057;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
+    bottom: -1px;
+}
+.tab-button:hover {
+    color: #5660f0;
+}
+
+.tab-button.active {
+    background: transparent;
+    color: #5660f0;
+    border-bottom: 3px solid #5660f0;
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+    background: white;
+    padding: 25px;
+    border-radius: 0 0 8px 8px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 控制按钮样式 */
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 9px 18px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn i {
+    font-size: 0.9em;
+}
+
+.btn-primary {
+    background-color: #5660f0;
+    color: white;
+    border-color: #5660f0;
+}
+.btn-primary:hover {
+    background-color: #4850d2;
+    border-color: #4850d2;
+}
+
+.btn-secondary {
+    background-color: #e9ecef;
+    color: #212529;
+    border-color: #ced4da;
+}
+.btn-secondary:hover {
+    background-color: #d1d5db;
+    border-color: #adb5bd;
+}
+
+.btn-success {
+    background-color: #198754;
+    color: white;
+    border-color: #198754;
+}
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+    border-color: #ffc107;
+}
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+.btn-action {
+    background-color: #0dcaf0;
+    color: white;
+    border-color: #0dcaf0;
+}
+.btn-action:hover{
+    background-color: #0baccc;
+    border-color: #0aa2c0;
+}
+
+
+.status-text {
+    color: #6c757d;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+/* 表格样式 */
+.table-container {
+    overflow-x: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #e9ecef;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+/* 调整单元格输入框和内部删除按钮的布局 */
+td > div.cell-content-wrapper {
+    position: relative;
+    display: flex; /* 使用flex布局 */
+    align-items: center; /* 垂直居中对齐 */
+}
+
+td input[type="text"] {
+    flex-grow: 1; /* 输入框占据剩余空间 */
+    border: 1px solid transparent;
+    padding: 6px 8px;
+    font-size: 14px;
+    background: transparent;
+    line-height: 1.4;
+    border-radius: 4px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: 30px;
+    padding-right: 25px; /* 为内部删除按钮预留空间 */
+}
+.cell-content-wrapper:hover .cell-delete-btn { /* 悬停在wrapper上时显示按钮 */
+    opacity: 0.7;
+}
+
+
+td input[type="text"]:focus {
+    outline: none;
+    border-color: #7B42F6;
+    box-shadow: 0 0 0 0.2rem rgba(86, 96, 240, 0.25);
+    background: white;
+}
+td input[type="text"]::placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+/* 单元格内删除按钮样式 */
+.cell-delete-btn {
+    position: absolute; /* 绝对定位在输入框内部的右侧 */
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 2px 3px; /* 减小padding */
+    font-size: 0.85em; /* 减小图标大小 */
+    opacity: 0; /* 默认隐藏 */
+    transition: opacity 0.2s;
+    line-height: 1; /* 确保图标垂直居中 */
+}
+
+.cell-delete-btn:hover {
+    opacity: 1 !important; /* 悬停时强制显示 */
+    color: #a71d2a;
+}
+/* 当输入框聚焦时，也显示旁边的删除按钮 */
+td input[type="text"]:focus + .cell-delete-btn {
+    opacity: 0.7;
+}
+
+
+.row-number {
+    text-align: center;
+    color: #6c757d;
+    font-weight: 500;
+    background: #f8f9fa;
+    font-size: 13px;
+}
+
+.paste-hint {
+    font-size: 13px;
+    color: #004085;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: #cce5ff;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}
+
+/* 表头按钮样式 (复制列、批量编辑列) */
+.header-btn {
+    background: transparent;
+    border: 1px solid #ced4da;
+    color: #495057;
+    cursor: pointer;
+    padding: 2px 6px; /* 统一padding */
+    margin-left: 5px; /* 与前一个按钮的间距 */
+    font-size: 0.85em; /* 统一图标大小 */
+    vertical-align: middle;
+    border-radius: 4px;
+    line-height: 1; /* 保证对齐 */
+}
+.header-btn:hover {
+    color: #5660f0;
+    border-color: #5660f0;
+    background-color: #e9ecef;
+}
+
+
+/* 行末尾的操作单元格删除按钮样式 */
+.action-cell .delete-row-btn { /*特定于操作列的删除按钮 */
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.1em;
+    display: inline-block; /* 确保能正常显示 */
+}
+.action-cell .delete-row-btn:hover {
+    color: #a71d2a;
+}
+.action-cell {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+/* SRT表格样式 */
+.srt-table-container {
+    overflow-x: auto;
+    max-height: calc(100vh - 350px);
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+#srt-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#srt-table th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #f8f9fa;
+}
+
+#srt-table td {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    vertical-align: top;
+    position: relative;
+    padding: 8px 10px;
+}
+
+.srt-modified {
+    background-color: #e6ffed;
+}
+
+.srt-time {
+    background-color: #fff3cd;
+    text-align: center;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.srt-content {
+    background-color: #f8f9fa;
+}
+
+.srt-row:hover td {
+    background-color: #e9ecef;
+}
+
+.srt-row.selected td {
+    background-color: #cfe2ff;
+    border-color: #5660f0;
+}
+
+.srt-index {
+    display: block;
+    font-size: 11px;
+    color: #6c757d;
+    margin-bottom: 3px;
+}
+
+/* 搜索样式 */
+.search-container {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    width: 300px;
+    font-size: 14px;
+}
+.search-input:focus {
+    border-color: #7B42F6;
+    box-shadow: 0 0 0 0.2rem rgba(86, 96, 240, 0.25);
+    outline: none;
+}
+
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #212529;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 10000; /* 确保在模态框之上 */
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+    font-size: 14px;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    bottom: 30px;
+}
+
+/* 模态框样式 (Modal) */
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    z-index: 1000; /* 确保在最上层 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 如果内容过多则滚动 */
+    background-color: rgba(0,0,0,0.5); /* 半透明背景 */
+    padding-top: 60px; /* 从顶部留出空间 */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 垂直居中一些，水平居中 */
+    padding: 0; /* 由header, body, footer控制padding */
+    border: 1px solid #888;
+    width: 60%; /* 模态框宽度 */
+    max-width: 700px; /* 最大宽度 */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1} /* 实际的top由margin: 5% auto决定，这里只是动画效果 */
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background-color: #5660f0;
+    color: white;
+    border-bottom: 1px solid #eee;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.close-btn {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 5px;
+}
+.close-btn:hover,
+.close-btn:focus {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+#batch-edit-textarea {
+    width: 100%;
+    padding: 10px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* 允许垂直调整大小 */
+    min-height: 200px; /* 最小高度 */
+}
+.modal-hint {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 10px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    text-align: right;
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    border-radius: 0 0 8px 8px;
+}
+.modal-footer .btn + .btn { /* 按钮间距 */
+    margin-left: 10px;
+}
+
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 10px;
+        margin: 10px;
+    }
+    .header {
+        padding: 20px 15px;
+        margin: -10px -10px 15px -10px;
+    }
+    .header h1 { font-size: 20px; }
+    .tab-button { padding: 10px 15px; font-size: 14px; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .controls .btn { width: 100%; margin-bottom: 8px; }
+    .status-text { margin-left: 0; text-align: center; margin-top: 10px;}
+    .search-container { flex-direction: column; }
+    .search-input { width: 100%; margin-bottom: 10px; }
+    th, td { padding: 8px 6px; font-size: 13px; }
+    td input[type="text"] { padding: 5px; min-height: 26px; padding-right: 22px; /* 调整为小图标留空 */}
+    .cell-delete-btn { font-size: 0.8em; right: 3px; } /* 移动端单元格内删除按钮调整 */
+    .header-btn { font-size: 0.8em; padding: 2px 4px; margin-left: 3px;} /* 移动端表头按钮调整 */
+    .table-container, .srt-table-container { max-height: 60vh; }
+
+    .modal-content {
+        width: 90%; /* 移动端模态框更宽 */
+        margin: 10% auto;
+    }
+    .modal-body { padding: 15px; }
+    #batch-edit-textarea { min-height: 150px; }
+}
